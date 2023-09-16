@@ -33,8 +33,12 @@
 <meta property="og:image" content="c:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916141001732.png">
 <meta property="og:image" content="c:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916141542845.png">
 <meta property="og:image" content="c:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916141842933.png">
+<meta property="og:image" content="c:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916144451492.png">
+<meta property="og:image" content="c:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916145432286.png">
+<meta property="og:image" content="c:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916151130117.png">
+<meta property="og:image" content="c:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916151313088.png">
 <meta property="article:published_time" content="2023-09-12T00:16:04.000Z">
-<meta property="article:modified_time" content="2023-09-16T06:36:43.531Z">
+<meta property="article:modified_time" content="2023-09-16T07:17:09.264Z">
 <meta property="article:author" content="pipi">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="c:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916131644476.png">
@@ -193,7 +197,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-16 14:36:43" itemprop="dateModified" datetime="2023-09-16T14:36:43+08:00">2023-09-16</time>
+      <time title="Modified: 2023-09-16 15:17:09" itemprop="dateModified" datetime="2023-09-16T15:17:09+08:00">2023-09-16</time>
     </span>
 
   
@@ -284,7 +288,28 @@
 <p>如果不想配置ssh，在git bash中运行下面的命令</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.sslVerify false</span><br></pre></td></tr></table></figure>
 
-<p>- </p>
+<ul>
+<li><p>首先我们需要在GitHub创建一个仓库，然后我们会将自己的博客上传到这个仓库，最后我们就能在随时随地访问我们的博客。</p>
+<p>我们在GitHub登陆自己的帐号，在主页依次点击</p>
+<p><img src="C:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916144451492.png" alt="image-20230916144451492"></p>
+</li>
+</ul>
+<p>​	然后根据以下图片内容填写相关信息。</p>
+<p><img src="C:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916145432286.png" alt="image-20230916145432286"></p>
+<p>现在我们的GitHub仓库就创建好了，接下来我们需要将博客文件上传到这个仓库。</p>
+<ul>
+<li>博客的上传</li>
+</ul>
+<p>​	我们需要找到_config.yml文件里的</p>
+<p>​	<img src="C:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916151130117.png" alt="image-20230916151130117"></p>
+<p>​	改为</p>
+<p><img src="C:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916151313088.png" alt="image-20230916151313088"></p>
+<p>​	最后保存退出即可。</p>
+<ul>
+<li>激动人心的时刻到了，我们在myBlog文件夹里面右键打开Git bash，依次运行以下三条命令。（运行最后一条命令时需要开启加速器）</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
