@@ -112,7 +112,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -134,6 +134,80 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/16/%E5%9B%BE%E5%BA%8A%E7%9A%84%E5%88%9B%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="pipi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/09/16/%E5%9B%BE%E5%BA%8A%E7%9A%84%E5%88%9B%E5%BB%BA/" class="post-title-link" itemprop="url">图床的创建</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-09-16 12:55:30 / Modified: 13:08:52" itemprop="dateCreated datePublished" datetime="2023-09-16T12:55:30+08:00">2023-09-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h1><p>在<a target="_blank" rel="noopener" href="https://pipi0960.github.io/2023/09/14/%E5%9C%A8typora%E5%86%99%E7%9A%84%E5%8D%9A%E5%AE%A2%E4%B8%8D%E8%83%BD%E5%B0%86%E7%85%A7%E7%89%87%E5%90%8C%E6%AD%A5%E5%88%B0github/">之前的文章</a>中我们解决了图片无法上传到github服务器并显示的问题。但是随之而来的问题就是我们总不能一个一个照片的上传，再把它的链接粘贴进我们的博客吧。于是我们需要一个自动化的小脚本来帮我们一键完成图片的上传。于是我们就会用到typora+picgo+github。</p>
+<h2 id="为什么不用gitee？"><a href="#为什么不用gitee？" class="headerlink" title="为什么不用gitee？"></a>为什么不用gitee？</h2><p>目前为止GitHub图床是我找到的免费最好用的，虽然速度比较慢，但是你也不想用着用着图床被封了吧，所以我们还是用GitHub吧，更别提bilibili的图床了。</p>
+<h1 id="需要什么软件？"><a href="#需要什么软件？" class="headerlink" title="需要什么软件？"></a>需要什么软件？</h1><ul>
+<li>Picgo</li>
+</ul>
+<h1 id="第一步：创建GitHub图床"><a href="#第一步：创建GitHub图床" class="headerlink" title="第一步：创建GitHub图床"></a>第一步：创建GitHub图床</h1>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -268,7 +342,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-14 09:20:58" itemprop="dateModified" datetime="2023-09-14T09:20:58+08:00">2023-09-14</time>
+      <time title="Modified: 2023-09-16 14:36:43" itemprop="dateModified" datetime="2023-09-16T14:36:43+08:00">2023-09-16</time>
     </span>
 
   
@@ -294,16 +368,19 @@
 </ul>
 <p>​	如果想详细研究Git安装过程可以参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/mukes/article/details/115693833?ops_request_misc=%7B%22request_id%22:%22169447854316800213071243%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=169447854316800213071243&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-115693833-null-null.142%5Ev93%5Einsert_down1&utm_term=git%E7%9A%84%E5%AE%89%E8%A3%85&spm=1018.2226.3001.4187">Git 详细安装教程（详解 Git 安装过	程的每一个步骤）_git安装-CSDN博客</a></p>
 <ul>
-<li><p>接下来我们需要对Github账号进行绑定，不做这一步电脑应该也会自动配置账号，但是为了不报错，还是配置一下吧。</p>
+<li><p>接下来我们需要进入git bash对Github账号进行绑定，不做这一步电脑应该也会自动配置账号，但是为了不报错，还是配置一下吧。</p>
 <p>打开刚刚安装好的Git bash在里面输入</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name “把这里替换成你的Github账号”</span><br><span class="line">git config --global user.email 把这里替换成你的GitHub邮箱</span><br><span class="line"># 只用替换中文即可，不要把双引号去掉</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>现在我们去安装node.js，然后我们的hexo才能正常运行。我们选择LTS版本（长期支持版本），然后选择for Windows进行下载安装。node官网<a target="_blank" rel="noopener" href="https://nodejs.org/en/download">Download | Node.js (nodejs.org)</a>安装过程也是无脑下一步</p>
 </li>
-<li><p>最后我们依次执行以下三行命令进行检查</p>
+<li><p>最后我们在git bash依次执行以下三行命令进行检查</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git version</span><br><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
 
 <p>如果成功，你会看到命令行显示出对应的git，node和npm版本</p>
+<p>像这样</p>
+<p><img src="C:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916131644476.png" alt="image-20230916131644476"></p>
+<p>$$<br>\textcolor{red}{注意：必须以管理员身份运行Git bash }<br>$$</p>
 </li>
 </ul>
 <h1 id="安装Hexo并下载博客文件"><a href="#安装Hexo并下载博客文件" class="headerlink" title="安装Hexo并下载博客文件"></a>安装Hexo并下载博客文件</h1><ul>
@@ -325,23 +402,39 @@
 <p>然后输入</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
 
-<p>最后在浏览器输入<a href="http://localhost:4000，如果上面步骤都成功运行，那么恭喜你，你自己的博客已经在本地成功运行了。不过可惜的是，自己有你自己的电脑可以进入。接下来我们需要将博客推送到GitHub上，这样我们就能让任何人在任何设备任何地点访问自己的博客，是不是很酷？">http://localhost:4000，如果上面步骤都成功运行，那么恭喜你，你自己的博客已经在本地成功运行了。不过可惜的是，自己有你自己的电脑可以进入。接下来我们需要将博客推送到GitHub上，这样我们就能让任何人在任何设备任何地点访问自己的博客，是不是很酷？</a></p>
+<p>最后在浏览器输入<a href="http://localhost:4000，如果上面步骤都成功运行，那么恭喜你，你自己的博客已经在本地成功运行了。">http://localhost:4000，如果上面步骤都成功运行，那么恭喜你，你自己的博客已经在本地成功运行了。</a></p>
+<p><img src="C:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916141229877.png" alt="image-20230916141229877"></p>
+</li>
+<li><p>不过可惜的是，只有有你自己的电脑可以进入。接下来我们需要将博客推送到GitHub上，这样我们就能让任何人在任何设备任何地点访问自己的博客，是不是很酷？</p>
 </li>
 </ul>
-<h1 id="主题的配置"><a href="#主题的配置" class="headerlink" title="主题的配置"></a>主题的配置</h1><ul>
-<li><p>是不是觉得原主题过于单一，没有炫酷到炸的动效？没问题你可以访问<a target="_blank" rel="noopener" href="https://hexo.io/themes/">Themes | Hexo</a>来下载自己喜欢的主题。</p>
+<h1 id="主题的配置"><a href="#主题的配置" class="headerlink" title="主题的配置"></a>主题的配置</h1><p>在我们将个人博客推送到GitHub之前我们可以将自己的博客做的好看一些，不过考虑到GitHub服务器的速度这里推荐较为简洁的<a target="_blank" rel="noopener" href="https://github.com/next-theme/hexo-theme-next">Next主题</a></p>
+<ul>
+<li>或者你感觉主题过于单一，没有炫酷到炸的动效？没问题你可以访问<a target="_blank" rel="noopener" href="https://hexo.io/themes/">Themes | Hexo</a>来下载自己喜欢的主题。（这里以Next主题进行示例）</li>
+<li>我们依次点击code，Local，Download ZIP然后我们就得到了主题的压缩包。</li>
+</ul>
+<p><img src="C:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916140220413.png" alt="image-20230916140220413"></p>
+<ul>
+<li>然后我们打开myBlog文件夹，将下载好的压缩包内的文件直接解压到文件夹themes里</li>
+</ul>
+<p><img src="C:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916140449699.png" alt="image-20230916140449699"></p>
+<ul>
+<li><p>下载完主题后在myBlog文件夹之下找到_config.yml用记事本打开，将以下内容改为你主题的名字</p>
+<p><img src="C:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916141001732.png" alt="image-20230916141001732"></p>
 </li>
-<li><p>下载好主题后我们将主题文件夹解压到myBlog文件夹下的thems文件夹里。</p>
+<li><p>如Next主题需要改为如下内容（其他主题同理）</p>
 </li>
-<li><p>下载完主题后在myBlog文件夹之下找到_config.yml，修改里面的内容。</p>
-<p>将them: 后的内容改为你的主题的</p>
-</li>
+</ul>
+<p><img src="C:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916141542845.png" alt="image-20230916141542845"></p>
+<ul>
+<li>我们再次运行hexo s指令，会发现我们的主题已经加载好了。<img src="C:\Users\59811\AppData\Roaming\Typora\typora-user-images\image-20230916141842933.png" alt="image-20230916141842933"></li>
 </ul>
 <h1 id="将博客推送到GitHub"><a href="#将博客推送到GitHub" class="headerlink" title="将博客推送到GitHub"></a>将博客推送到GitHub</h1><p>我看别人在前期会对ssh进行配置，但是配置ssh过程较为麻烦，所以前期不建议进行ssh的配置。</p>
 <p>因此我们需要将ssh的检测关闭，如果你有兴趣想配置ssh可以参考<a target="_blank" rel="noopener" href="http://www.taodudu.cc/news/show-6291762.html?action=onClick">个人博客系列【Hexo】——git 使用ssh协议免密登录 (taodudu.cc)</a>从第四步开始看即可。</p>
 <p>如果不想配置ssh，在git bash中运行下面的命令</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.sslVerify false</span><br></pre></td></tr></table></figure>
 
+<p>- </p>
 
       
     </div>
