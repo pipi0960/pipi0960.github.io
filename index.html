@@ -690,9 +690,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-09-11 10:20:48 / Modified: 21:18:45" itemprop="dateCreated datePublished" datetime="2023-09-11T10:20:48+08:00">2023-09-11</time>
+      <time title="Created: 2023-09-11 10:20:48" itemprop="dateCreated datePublished" datetime="2023-09-11T10:20:48+08:00">2023-09-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-09-16 09:49:31" itemprop="dateModified" datetime="2023-09-16T09:49:31+08:00">2023-09-16</time>
     </span>
 
   
@@ -717,6 +723,7 @@
 <p>最后利用main函数将程序连通起来</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">model, device, half, stride, names, imgsz = get_model()</span><br><span class="line">camera = cv2.VideoCapture(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    ret, img0 = camera.read()</span><br><span class="line">    <span class="keyword">if</span> ret:</span><br><span class="line">        img0 = np.array(img0)</span><br><span class="line">        img0 = cv2.cvtColor(img0, cv2.COLOR_BGRA2BGR)</span><br><span class="line">    	img, xywh_list = out_img(img0, model, device, half, stride, names, imgsz)</span><br><span class="line">    <span class="keyword">if</span> xywh_list:</span><br><span class="line">    	<span class="built_in">print</span>(height_detect(xywh_list, 相机y轴总像素大小))</span><br><span class="line">    cv2.imshow(<span class="string">&#x27;camera&#x27;</span>, img)</span><br><span class="line">    img = cv2.cvtColor(img, cv2.COLOR_BGRA2BGR)</span><br><span class="line">    <span class="comment"># 展示检测结果</span></span><br><span class="line">    cv2.imshow(<span class="string">&#x27;窗口名称&#x27;</span>, img)</span><br><span class="line">	<span class="comment"># 不加waitKey会卡死</span></span><br><span class="line">    k = cv2.waitKey(<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># 如果检测到esc建，结束程序</span></span><br><span class="line">    <span class="keyword">if</span> k % <span class="number">256</span> == <span class="number">27</span>:</span><br><span class="line">        exit(<span class="string">&#x27;程序已结束&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
+<h1 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h1><p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309160949130.jpg" alt="37c112e8e9f3933368783990ed122f4"></p>
 
       
     </div>
