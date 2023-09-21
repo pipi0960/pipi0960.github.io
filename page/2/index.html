@@ -112,7 +112,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -134,6 +134,87 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/10/%E6%8A%93%E5%8F%96%E5%B1%8F%E5%B9%95%E5%86%85%E5%AE%B9%E5%B9%B6%E5%B1%95%E7%A4%BA%E5%87%BA%E6%9D%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="pipi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/09/10/%E6%8A%93%E5%8F%96%E5%B1%8F%E5%B9%95%E5%86%85%E5%AE%B9%E5%B9%B6%E5%B1%95%E7%A4%BA%E5%87%BA%E6%9D%A5/" class="post-title-link" itemprop="url">抓取屏幕内容并展示出来</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-10 17:25:38" itemprop="dateCreated datePublished" datetime="2023-09-10T17:25:38+08:00">2023-09-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-11 10:05:46" itemprop="dateModified" datetime="2023-09-11T10:05:46+08:00">2023-09-11</time>
+    </span>
+
+  
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="抓取屏幕并展示"><a href="#抓取屏幕并展示" class="headerlink" title="抓取屏幕并展示"></a>抓取屏幕并展示</h4><h5 id="依旧是先导入需要的包"><a href="#依旧是先导入需要的包" class="headerlink" title="依旧是先导入需要的包"></a>依旧是先导入需要的包</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> mss</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> win32con</span><br><span class="line"><span class="keyword">import</span> win32gui</span><br></pre></td></tr></table></figure>
+
+<h5 id="然后就是我们抓取屏幕的小程序了"><a href="#然后就是我们抓取屏幕的小程序了" class="headerlink" title="然后就是我们抓取屏幕的小程序了"></a>然后就是我们抓取屏幕的小程序了</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">left = <span class="number">2560</span> // <span class="number">2</span></span><br><span class="line">top = <span class="number">1600</span> // <span class="number">2</span></span><br><span class="line">width = <span class="number">2560</span> // <span class="number">2</span></span><br><span class="line">w = <span class="number">2560</span> // <span class="number">5</span></span><br><span class="line">h = <span class="number">1600</span> // <span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">可以用这个命令去获取当前屏幕分辨率</span></span><br><span class="line"><span class="string">root = tk.Tk()</span></span><br><span class="line"><span class="string">width = root.winfo_screenwidth()	</span></span><br><span class="line"><span class="string">height = root.winfo_screenheight()</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">window_name = <span class="string">&#x27;output&#x27;</span></span><br><span class="line">sct = mss.mss()</span><br><span class="line">monitor = &#123;  <span class="comment"># monitor定义了截屏区域，单位是像素</span></span><br><span class="line">    <span class="string">&quot;left&quot;</span>: left,  <span class="comment"># left截屏区域的最左边</span></span><br><span class="line">    <span class="string">&#x27;top&#x27;</span>: top,  <span class="comment"># top是截屏区域的最上边</span></span><br><span class="line">    <span class="string">&#x27;width&#x27;</span>: width,  <span class="comment"># width是截屏区域的宽度</span></span><br><span class="line">    <span class="string">&#x27;height&#x27;</span>: height  <span class="comment"># height是截屏区域的高度</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    img = sct.grab(monitor)  <span class="comment"># 截屏并赋值给img</span></span><br><span class="line">    img = np.array(img)  <span class="comment"># 转换格式</span></span><br><span class="line">    cv2.resizeWindow(window_name, w, h)  <span class="comment"># 重设窗口大小</span></span><br><span class="line">    cv2.imshow(window_name, img)  <span class="comment"># 展示截屏内容</span></span><br><span class="line"></span><br><span class="line">    k = cv2.waitKey(<span class="number">250</span>)  <span class="comment"># 等待250ms并监听键盘内容，不加这一段代码程序会卡死</span></span><br><span class="line">    hwnd = win32gui.FindWindow(<span class="literal">None</span>, window_name)  <span class="comment"># 置顶当前窗口，网上搜的不太明白</span></span><br><span class="line">    win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, win32con.SWP_NOMOVE | win32con.SWP_NOSIZE)</span><br><span class="line">    <span class="keyword">if</span> k % <span class="number">256</span> == <span class="number">27</span>:  <span class="comment"># 若用户按esc则结束</span></span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
