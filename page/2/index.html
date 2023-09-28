@@ -112,7 +112,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -134,6 +134,96 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/11/yolov5%E6%B5%8B%E9%87%8F%E8%BA%AB%E9%AB%98%E6%80%9D%E8%B7%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="pipi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/09/11/yolov5%E6%B5%8B%E9%87%8F%E8%BA%AB%E9%AB%98%E6%80%9D%E8%B7%AF/" class="post-title-link" itemprop="url">yolov5测量身高思路</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-11 10:20:48" itemprop="dateCreated datePublished" datetime="2023-09-11T10:20:48+08:00">2023-09-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-16 09:49:31" itemprop="dateModified" datetime="2023-09-16T09:49:31+08:00">2023-09-16</time>
+    </span>
+
+  
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="大概思路"><a href="#大概思路" class="headerlink" title="大概思路"></a>大概思路</h4><p>​	我们可以想象一下如果我们利用相同像素的相机进行数据采集，那么我们站在距离摄像机固定远的位置我们所占的像素大小也是基本不变的。</p>
+<p>​	利用这个规律我们可以知道一个人在图像中所占像素大小，并根据所占像素大小来计算这个人的身高。</p>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><p>我们首先需要读取摄像头</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">camera = cv2.VideoCapture(<span class="number">0</span>)  <span class="comment"># 读取摄像头，0代表手提电脑自带的摄像头，若改成1，2，3...则可以调用其他摄像头</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	k = cv2.waitKey(<span class="number">1</span>)</span><br><span class="line">	ret, img0 = camera.read() <span class="comment"># 读取当前帧，为图片</span></span><br><span class="line">    cv2.namedWindow(<span class="string">&#x27;camera&#x27;</span>)</span><br><span class="line">	cv2.imshow(<span class="string">&#x27;camera&#x27;</span>, img0)</span><br></pre></td></tr></table></figure>
+
+<p>定义一个测量身高的函数，并测量标准值（需要你站在里摄像头正前方1米处测量自己纵向占多少像素，再用你的身高除以这个像素大小，就可以得到标准值）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">height_detect</span>(<span class="params">xywh_list, height</span>):</span><br><span class="line">	 <span class="comment"># 将识别到的中心点坐标传入</span></span><br><span class="line">    _, _, _, h = xywh_list[<span class="number">0</span>]</span><br><span class="line">	std = <span class="string">&#x27;&#x27;</span> <span class="comment">#你站在里摄像头正前方1米处测量自己纵向占多少像素，再用你的身高除以这个像素大小</span></span><br><span class="line">    <span class="comment"># 去归一化</span></span><br><span class="line">    h *= height <span class="comment"># height为摄像机获取图像的y轴像素大小</span></span><br><span class="line">    h *= std <span class="comment">#std为标准值</span></span><br><span class="line">    <span class="keyword">return</span> h</span><br></pre></td></tr></table></figure>
+
+<p>然后我们调用yolov5的检测函数进行图像检测，详见[重构yolov5-6-0-detect-py进行目标检测](<a target="_blank" rel="noopener" href="https://pipi0960.github.io/2023/09/11/%E9%87%8D%E6%9E%84yolov5-6-0-detect-py%E8%BF%9B%E8%A1%8C%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/">重构yolov5-6.0 detect.py进行目标检测 | 后花园 (pipi0960.github.io)</a>)</p>
+<p>最后利用main函数将程序连通起来</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">model, device, half, stride, names, imgsz = get_model()</span><br><span class="line">camera = cv2.VideoCapture(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    ret, img0 = camera.read()</span><br><span class="line">    <span class="keyword">if</span> ret:</span><br><span class="line">        img0 = np.array(img0)</span><br><span class="line">        img0 = cv2.cvtColor(img0, cv2.COLOR_BGRA2BGR)</span><br><span class="line">    	img, xywh_list = out_img(img0, model, device, half, stride, names, imgsz)</span><br><span class="line">    <span class="keyword">if</span> xywh_list:</span><br><span class="line">    	<span class="built_in">print</span>(height_detect(xywh_list, 相机y轴总像素大小))</span><br><span class="line">    cv2.imshow(<span class="string">&#x27;camera&#x27;</span>, img)</span><br><span class="line">    img = cv2.cvtColor(img, cv2.COLOR_BGRA2BGR)</span><br><span class="line">    <span class="comment"># 展示检测结果</span></span><br><span class="line">    cv2.imshow(<span class="string">&#x27;窗口名称&#x27;</span>, img)</span><br><span class="line">	<span class="comment"># 不加waitKey会卡死</span></span><br><span class="line">    k = cv2.waitKey(<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># 如果检测到esc建，结束程序</span></span><br><span class="line">    <span class="keyword">if</span> k % <span class="number">256</span> == <span class="number">27</span>:</span><br><span class="line">        exit(<span class="string">&#x27;程序已结束&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h1><p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309160949130.jpg" alt="37c112e8e9f3933368783990ed122f4"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
