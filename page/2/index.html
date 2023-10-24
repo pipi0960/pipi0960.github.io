@@ -112,7 +112,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -134,6 +134,139 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/11/Linux%20to%20be%20continue%20update/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="pipi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/09/11/Linux%20to%20be%20continue%20update/" class="post-title-link" itemprop="url">Linux to be continue update</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-09-11 19:24:40 / 修改时间：20:41:34" itemprop="dateCreated datePublished" datetime="2023-09-11T19:24:40+08:00">2023-09-11</time>
+    </span>
+
+  
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Linux指令"><a href="#Linux指令" class="headerlink" title="Linux指令"></a>Linux指令</h1><p><strong>man 命令：可以查看命令作用，也可以下载中文man手册</strong></p>
+<p><strong>linux.51yip.com也可以查找指令作用</strong></p>
+<p>ls 展示当前路径下所有内容，ls后蓝色的是文件夹</p>
+<p>​	ls -l 展示当前路径文件夹下所有内容,并列出内容</p>
+<p>​	ls -ld &#x2F;home： home目录本身的信息</p>
+<p>​	ls -h</p>
+<p>​	ls -l 文件名 ：列出该文件的信息</p>
+<p>​	ls –help</p>
+<p>​	ls -a:可显示隐藏文件,如.开头的文件和..开头的软件。</p>
+<p>-短格式</p>
+<p>–长格式</p>
+<p>pwd 显示当前路径</p>
+<p>cd 进入指定路径</p>
+<p>​	只输入cd回到该用户home目录</p>
+<p>​	cd ~用户名：直接进入该用户home目录</p>
+<p>su root 进入root权限</p>
+<p>vim 是打开对应文本并编辑，没有该文件则创建</p>
+<p>​	i进入编辑模式</p>
+<p>​	esc建进入命令模式</p>
+<p>​		:wq退出并保存</p>
+<p>reboot重启</p>
+<p>powerof关机</p>
+<p>Windows上是ipconfig，Linux是ifconfig</p>
+<p>echo ？</p>
+<p>tab建对指令进行补全</p>
+<p>ctrl + c结束进程运行</p>
+<p>ctrl + l清屏</p>
+<p>ctrl + ？注销登录</p>
+<p>ping</p>
+<p>多条命令可以用&#x2F;进行分割</p>
+<p>\？</p>
+<p>more，head，less，tail：适合查看较长的文本</p>
+<p>cat，tial：可以查看实时刷新的内容</p>
+<h1 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h1><p>-是普通文件</p>
+<p>d：是目录文件</p>
+<p>l是链接文件？</p>
+<p>b是设备文件</p>
+<p>c字符设备文件</p>
+<p>p管道文件</p>
+<p>root用户路径在root根目录下有最高权限</p>
+<p>bin目录下有内置命令，如ls命令</p>
+<p>boot引导相关文件</p>
+<p>dev目录下是插入u盘的目录，需要先挂在相应目录才能访问</p>
+<p>etc有很多配置文件，相当于系统设置 .conf的是配置文件</p>
+<p>var日志文件</p>
+<p>lib库</p>
+<p>usr用户</p>
+<p>media媒体文件</p>
+<p>tmp临时文件</p>
+<p>root</p>
+<h1 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h1><p>绝对路径    从根目录开始</p>
+<p>相对路径    .是当前目录..是上一级目录 cd ..&#x2F; 返回上一级目录</p>
+<h1 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h1><p>文件所有者   文件所属组   其他用户</p>
+<p>r可读  4</p>
+<p>w可写  2</p>
+<p>x执行  1        可读可写可执行的权限为各权限数字相加 4 + 2 + 1 &#x3D; 7</p>
+<p>-rw-r–r– 1 root root 34298 04-02 00:23 install.log     ？</p>
+<p>前九个是权限 硬连接数 用户 文件所有者所在组 文件大小单位字节 日期 时间 文件名</p>
+<h1 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h1><p>硬链接：把文件删除后，硬链接仍然可以访问到该文件，把硬链接删除才能彻底删除。   增量备份？inod连接数?</p>
+<p>软链接：相当于Windows的快捷方式</p>
+<h1 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h1><p>#后代表root</p>
+<p>$为普通用户 </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
