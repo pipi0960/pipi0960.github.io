@@ -24,6 +24,9 @@
   --highlight-gutter-foreground: #555;
   color-scheme: light;
 }
+.vpower.txt-right {
+  display: none;
+}
 html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
@@ -2346,7 +2349,7 @@ header.header {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #e9b1ff;
+  background: #1c1260;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
