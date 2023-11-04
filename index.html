@@ -112,7 +112,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -134,6 +134,79 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/04/c%E8%AF%AD%E8%A8%80%E4%BA%8C%E5%8F%89%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="pipi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/04/c%E8%AF%AD%E8%A8%80%E4%BA%8C%E5%8F%89%E6%A0%91/" class="post-title-link" itemprop="url">c语言二叉树（存档，未验证，To be continue）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-11-04 13:38:17 / 修改时间：13:42:44" itemprop="dateCreated datePublished" datetime="2023-11-04T13:38:17+08:00">2023-11-04</time>
+    </span>
+
+  
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="comment">// 定义一个二叉树的节点</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Twotrees</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">int</span> data;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Twotrees</span> *<span class="title">left</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Twotrees</span> *<span class="title">right</span>;</span></span><br><span class="line">&#125; Trees;</span><br><span class="line"><span class="comment">// 先序遍历</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">preoder</span><span class="params">(Trees* node)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node != <span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(node -&gt; data);</span><br><span class="line">        preoder(node -&gt; left);</span><br><span class="line">        preoder(node -&gt; right);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 中序遍历</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">inoder</span><span class="params">(Trees* node)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node != <span class="literal">NULL</span>)&#123;</span><br><span class="line">        preoder(node -&gt; left);</span><br><span class="line">        <span class="built_in">printf</span>(node -&gt; data);</span><br><span class="line">        preoder(node -&gt; right);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 后序遍历</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">postoder</span><span class="params">(Trees* node)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node != <span class="literal">NULL</span>)&#123;</span><br><span class="line">        preoder(node -&gt; left);</span><br><span class="line">        preoder(node -&gt; right);</span><br><span class="line">        <span class="built_in">printf</span>(node -&gt; data);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 构造二叉树并输入内容（未验证）</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">Addele</span><span class="params">(Trees* node)</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入该节点是否有左孩子，0代表无，1代表有。&quot;</span>);</span><br><span class="line">    <span class="type">int</span> rightKey;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;rightKey);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入该节点是否有右孩子，0代表无，1代表有。&quot;</span>);</span><br><span class="line">    <span class="type">int</span> leftKey;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;leftKey);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入该节点的数值&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span> (<span class="string">&quot;%d&quot;</span>,&amp;node -&gt; data);</span><br><span class="line">    <span class="keyword">if</span>(rightKey != <span class="number">0</span>)&#123;</span><br><span class="line">        Addele(node -&gt; left);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(leftKey != <span class="number">0</span>)&#123;</span><br><span class="line">        Addele(node -&gt; right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">   </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -853,112 +926,6 @@
           <h1 id="加速器"><a href="#加速器" class="headerlink" title="加速器"></a>加速器</h1><p>可以用watt tokkit，官网链接：<a target="_blank" rel="noopener" href="https://steampp.net/">https://steampp.net/</a></p>
 <p>也可以用fast github，用清华云盘下载就好，下载链接：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/432414619">https://zhuanlan.zhihu.com/p/432414619</a></p>
 <p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309201350942.png" alt="image-20230920134720224"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/20/%E5%86%99%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="pipi">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="后花园">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 后花园">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/09/20/%E5%86%99%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="post-title-link" itemprop="url">写一自己的篇博客</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-09-20 12:46:55 / 修改时间：13:37:24" itemprop="dateCreated datePublished" datetime="2023-09-20T12:46:55+08:00">2023-09-20</time>
-    </span>
-
-  
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="写一篇自己的博客："><a href="#写一篇自己的博客：" class="headerlink" title="写一篇自己的博客："></a>写一篇自己的博客：</h1><p>恭喜你以将军百战死的心态完成可了博客的创建，当然你的收获的成就感还有快乐也是满满的一大筐，现在我们将这种快乐写成一篇文章，上传到我们的博客，来跟大家分享（得瑟）一下。</p>
-<h1 id="下载Typora"><a href="#下载Typora" class="headerlink" title="下载Typora"></a>下载Typora</h1><p>于我而言是不可能为了上传博客而学习markdown等一些网站语言。于是Typora像个救世主一样出现在我的世界。虽然他是收费的，但我们有学习版。</p>
-<ul>
-<li><p>这里就跟着bilibili博主走就好了，<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV14x4y137Kd/?spm_id_from=333.337.search-card.all.click&vd_source=f81b0f5ffcde0c97e824a0654bbacc53">Typora免费安装</a>我们获取到Typora之后就可以写一篇博客了</p>
-<p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309201329282.png" alt="image-20230920125840552"></p>
-</li>
-</ul>
-<h1 id="写博客"><a href="#写博客" class="headerlink" title="写博客"></a>写博客</h1><ul>
-<li>我们在myBlog文件夹下右键选择”open git bash here”</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309201330505.png"></p>
-<ul>
-<li><p>我们输入hexo new “text”，然后回车</p>
-<p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309201330525.png" alt="image-20230920130348833"></p>
-<p>然后我们会看到有一个.md的文件生成到了 D:\library\myBlog\source_posts目录下。</p>
-</li>
-<li><p>我们进入该目录就会发现多了一个text文件</p>
-<p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309201330548.png" alt="image-20230920130642098"></p>
-</li>
-<li><p>我们用Typora打开它，会发现程序已经帮我们创建好一些参数了。</p>
-</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309201330570.png" alt="image-20230920130826555"></p>
-<ul>
-<li><p>我们按键盘的Ctrl + 1是创建一级标题，Ctrl + 2是二级标题。</p>
-<p>为了让你的文章看起来更加美观，还有更多内容跟玩法可以慢慢探索</p>
-<p>可以参考Typora<a target="_blank" rel="noopener" href="https://support.typoraio.cn/Quick-Start/">官网的教程</a></p>
-<p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309201330590.png" alt="image-20230920131142198"></p>
-</li>
-<li><p>写好内容之后我们保存并退出，回到博客的根目录下右键打开git bash，依次输入以下指令,然后过段时间我们就能在网站看到我们新写的文章啦。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309201330611.png" alt="image-20230920131628598"></p>
-</li>
-</ul>
 
       
     </div>
