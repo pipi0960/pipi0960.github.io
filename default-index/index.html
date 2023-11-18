@@ -119,13 +119,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -142,6 +142,82 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/18/%E6%89%BE%E5%87%BA%E4%B8%80%E4%B8%AA%E5%88%97%E8%A1%A8%E9%87%8C%E6%AF%8F%E4%B8%AA%E6%95%B0%E5%AD%97%E5%92%8C%E4%BB%96%E6%89%80%E5%9C%A8%E4%BD%8D%E7%BD%AE%E4%B9%8B%E5%92%8C%E7%9B%B8%E7%AD%89%E7%9A%84%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="pipi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/18/%E6%89%BE%E5%87%BA%E4%B8%80%E4%B8%AA%E5%88%97%E8%A1%A8%E9%87%8C%E6%AF%8F%E4%B8%AA%E6%95%B0%E5%AD%97%E5%92%8C%E4%BB%96%E6%89%80%E5%9C%A8%E4%BD%8D%E7%BD%AE%E4%B9%8B%E5%92%8C%E7%9B%B8%E7%AD%89%E7%9A%84%E6%95%B0/" class="post-title-link" itemprop="url">找出一个列表里每个数字和他所在位置之和相等的数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-11-18 12:57:36 / 修改时间：13:00:55" itemprop="dateCreated datePublished" datetime="2023-11-18T12:57:36+08:00">2023-11-18</time>
+    </span>
+
+  
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h1><p>其实是我理解错了，我以为数位和是这个数跟他所在位置之和，结果到最后是这个数的每一位相加。</p>
+<p>但是代码已经写出来了，顺带上传一下吧。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">nums = [<span class="number">18</span>, <span class="number">17</span>, <span class="number">36</span>, <span class="number">13</span>, <span class="number">7</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(nums)):</span><br><span class="line">    sum1 = nums[i] + <span class="number">1</span> +i</span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(i+<span class="number">1</span>,<span class="built_in">len</span>(nums)):</span><br><span class="line">        sum2 = n+nums[n]+<span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> n == i:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> sum1==sum2:</span><br><span class="line">            <span class="built_in">print</span>(sum2)</span><br></pre></td></tr></table></figure>
+
+<h1 id="输出结果："><a href="#输出结果：" class="headerlink" title="输出结果："></a>输出结果：</h1><p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/image-20231118125914624.png" alt="image-20231118125914624"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -896,79 +972,6 @@
 <p>在偶然间我发现每次暂停以后再开始下载速度会短时间内维持在一个较为可用的水平，但是我们不能一直在这里点击暂停下载开始下载吧？</p>
 <p>但我们可是学计算机的，于是我们可以写一个小小的自动化小程序来帮助我们完成繁琐的事务。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pyautogui</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line">time.sleep(<span class="number">10</span>) <span class="comment"># 等待10秒</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    pyautogui.click()  <span class="comment"># 点击鼠标左键</span></span><br><span class="line">    time.sleep(<span class="number">0.01</span>)  <span class="comment"># 等待0.01秒</span></span><br><span class="line">    pyautogui.click()  <span class="comment"># 再次点击鼠标左键</span></span><br><span class="line">    time.sleep(<span class="number">10</span>)  <span class="comment"># 等待10秒</span></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/28/%E7%94%A8python%E6%B1%82%E4%B8%80%E7%99%BE%E4%BB%A5%E5%86%85%E7%9A%84%E5%81%B6%E6%95%B0%E4%B9%8B%E5%92%8C%EF%BC%8C%E4%B8%8D%E5%8C%85%E6%8B%AC100/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="pipi">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="后花园">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 后花园">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/09/28/%E7%94%A8python%E6%B1%82%E4%B8%80%E7%99%BE%E4%BB%A5%E5%86%85%E7%9A%84%E5%81%B6%E6%95%B0%E4%B9%8B%E5%92%8C%EF%BC%8C%E4%B8%8D%E5%8C%85%E6%8B%AC100/" class="post-title-link" itemprop="url">用python求一百以内的偶数之和，不包括100</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2023-09-28 10:43:58 / 修改时间：10:44:36" itemprop="dateCreated datePublished" datetime="2023-09-28T10:43:58+08:00">2023-09-28</time>
-    </span>
-
-  
-  
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">num = <span class="number">0</span></span><br><span class="line"><span class="built_in">sum</span> = <span class="number">0</span></span><br><span class="line">single = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">num += <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> single &lt; <span class="number">98</span>:</span><br><span class="line">    single = num*<span class="number">2</span></span><br><span class="line">    <span class="built_in">sum</span> = single + <span class="built_in">sum</span></span><br><span class="line">    num += <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">sum</span>)</span><br></pre></td></tr></table></figure>
 
 
       
