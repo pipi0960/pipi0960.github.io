@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="问题：在自己博客搭建好以后会发现在Typora中插入的图片在公网链接不能查看 为了找到问题我们在浏览器按f12，可以看到图片的地址仍然是本地电脑上的图片路径，那么问题很明显已经找到了，就是Typora并没有将图片上传到GitHub服务器。  解决： 我先尝试了新建一个GitHub仓库然后将这张图片上传到这个仓库。   然后我们将这里的链接复制   在Typora中右键空白处选择插入图像，可以看到软">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在typora写的博客不能将照片同步到github">
+<meta property="og:url" content="http://example.com/2023/09/14/%E5%9C%A8typora%E5%86%99%E7%9A%84%E5%8D%9A%E5%AE%A2%E4%B8%8D%E8%83%BD%E5%B0%86%E7%85%A7%E7%89%87%E5%90%8C%E6%AD%A5%E5%88%B0github/index.html">
+<meta property="og:site_name" content="后花园">
+<meta property="og:description" content="问题：在自己博客搭建好以后会发现在Typora中插入的图片在公网链接不能查看 为了找到问题我们在浏览器按f12，可以看到图片的地址仍然是本地电脑上的图片路径，那么问题很明显已经找到了，就是Typora并没有将图片上传到GitHub服务器。  解决： 我先尝试了新建一个GitHub仓库然后将这张图片上传到这个仓库。   然后我们将这里的链接复制   在Typora中右键空白处选择插入图像，可以看到软">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309141246217.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309141836962.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309141836221.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309141836701.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/68.png">
+<meta property="article:published_time" content="2023-09-14T01:26:44.000Z">
+<meta property="article:modified_time" content="2023-11-19T04:13:50.561Z">
+<meta property="article:author" content="pipi">
+<meta property="article:tag" content="博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309141246217.png">
+
+
+<link rel="canonical" href="http://example.com/2023/09/14/%E5%9C%A8typora%E5%86%99%E7%9A%84%E5%8D%9A%E5%AE%A2%E4%B8%8D%E8%83%BD%E5%B0%86%E7%85%A7%E7%89%87%E5%90%8C%E6%AD%A5%E5%88%B0github/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/09/14/%E5%9C%A8typora%E5%86%99%E7%9A%84%E5%8D%9A%E5%AE%A2%E4%B8%8D%E8%83%BD%E5%B0%86%E7%85%A7%E7%89%87%E5%90%8C%E6%AD%A5%E5%88%B0github/","path":"2023/09/14/在typora写的博客不能将照片同步到github/","title":"在typora写的博客不能将照片同步到github"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>在typora写的博客不能将照片同步到github | 后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">后花园</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">问题：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">解决：</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">pipi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/14/%E5%9C%A8typora%E5%86%99%E7%9A%84%E5%8D%9A%E5%AE%A2%E4%B8%8D%E8%83%BD%E5%B0%86%E7%85%A7%E7%89%87%E5%90%8C%E6%AD%A5%E5%88%B0github/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="pipi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="在typora写的博客不能将照片同步到github | 后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在typora写的博客不能将照片同步到github
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-14 09:26:44" itemprop="dateCreated datePublished" datetime="2023-09-14T09:26:44+08:00">2023-09-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-19 12:13:50" itemprop="dateModified" datetime="2023-11-19T12:13:50+08:00">2023-11-19</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Valine：</span>
+  
+    <a title="valine" href="/2023/09/14/%E5%9C%A8typora%E5%86%99%E7%9A%84%E5%8D%9A%E5%AE%A2%E4%B8%8D%E8%83%BD%E5%B0%86%E7%85%A7%E7%89%87%E5%90%8C%E6%AD%A5%E5%88%B0github/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/09/14/%E5%9C%A8typora%E5%86%99%E7%9A%84%E5%8D%9A%E5%AE%A2%E4%B8%8D%E8%83%BD%E5%B0%86%E7%85%A7%E7%89%87%E5%90%8C%E6%AD%A5%E5%88%B0github/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h1><p>在自己博客搭建好以后会发现在Typora中插入的图片在公网链接不能查看</p>
+<p>为了找到问题我们在浏览器按f12，可以看到图片的地址仍然是本地电脑上的图片路径，那么问题很明显已经找到了，就是Typora并没有将图片上传到GitHub服务器。</p>
+<p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309141246217.png" alt="7aa687d74f5c8295174c5169a616a8f"></p>
+<h1 id="解决："><a href="#解决：" class="headerlink" title="解决："></a>解决：</h1><ul>
+<li><p>我先尝试了新建一个GitHub仓库然后将这张图片上传到这个仓库。</p>
+<p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309141836962.png" alt="image-20230914130404960"></p>
+</li>
+<li><p>然后我们将这里的链接复制</p>
+<p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309141836221.jpg" alt="sdf"></p>
+</li>
+<li><p>在Typora中右键空白处选择插入图像，可以看到软件已经帮我们自动在小括号里填好了该图片的网址，如果没有，手动添加一下就好。</p>
+<p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309141836701.png" alt="image-20230914131111328"></p>
+</li>
+<li><p>最后我们在git控制台依次运行一下hexo clean，hexo g，hexo d进入我们的网站我们就可以发现图片已经能正常在网页进行浏览了。</p>
+</li>
+</ul>
+<p>​       <img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/68.png" alt="image-20230914184110878"></p>
+<ul>
+<li>如果图片还是出不来就挂加速器，然后刷新一下就好了，github的服务器毕竟在国外，还是先忍受以下好了，后期研究以下自己的服务器。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag"># 博客</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/12/%E5%85%B3%E4%BA%8E%E5%88%A9%E7%94%A8GitHub%E5%92%8CHexo%E5%85%8D%E8%B4%B9%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/" rel="prev" title="关于利用GitHub和Hexo免费搭建自己的博客">
+                  <i class="fa fa-angle-left"></i> 关于利用GitHub和Hexo免费搭建自己的博客
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/09/16/%E5%9B%BE%E5%BA%8A%E7%9A%84%E5%88%9B%E5%BB%BA/" rel="next" title="图床的创建">
+                  图床的创建 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">pipi</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"8FiyFZkhWInNXVB0lIUmbtPr-gzGzoHsz","appKey":"LEP7VhClCq3n9vDCc2wv5on6","serverURLs":"https://8fiyfzkh.lc-cn-n1-shared.com","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":true,"enableQQ":true,"requiredFields":[],"el":"#valine-comments","path":"/2023/09/14/%E5%9C%A8typora%E5%86%99%E7%9A%84%E5%8D%9A%E5%AE%A2%E4%B8%8D%E8%83%BD%E5%B0%86%E7%85%A7%E7%89%87%E5%90%8C%E6%AD%A5%E5%88%B0github/"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.valine.el)
+    .then(() => NexT.utils.getScript(
+      'https://fastly.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js',
+      { condition: window.Valine }
+    ))
+    .then(() => {
+      new Valine(CONFIG.valine);
+    });
+});
+</script>
+
+</body>
+</html>

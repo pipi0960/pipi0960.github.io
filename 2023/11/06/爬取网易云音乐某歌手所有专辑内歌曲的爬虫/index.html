@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言：​	开始打算弄个逆向工程，然后把网易云的歌爬下来，但是这件事情是违法的，绝对不是学艺不精，所以我又搜了一个网易云的开放API，虽然下载不了付费歌曲，但是让我这个小白练一练爬虫还是绰绰有余的。 思路：​	我最开始以为这个东西很简单，所以我试着通过网易云的搜索栏和post指令获取某一首歌曲的id，但是实际过程中发现post的负载是经过js加密而且高度混淆的，虽然我一直在研究逆向这个东西，但是以我">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬取网易云音乐某歌手所有专辑内歌曲的爬虫">
+<meta property="og:url" content="http://example.com/2023/11/06/%E7%88%AC%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%9F%90%E6%AD%8C%E6%89%8B%E6%89%80%E6%9C%89%E4%B8%93%E8%BE%91%E5%86%85%E6%AD%8C%E6%9B%B2%E7%9A%84%E7%88%AC%E8%99%AB/index.html">
+<meta property="og:site_name" content="后花园">
+<meta property="og:description" content="前言：​	开始打算弄个逆向工程，然后把网易云的歌爬下来，但是这件事情是违法的，绝对不是学艺不精，所以我又搜了一个网易云的开放API，虽然下载不了付费歌曲，但是让我这个小白练一练爬虫还是绰绰有余的。 思路：​	我最开始以为这个东西很简单，所以我试着通过网易云的搜索栏和post指令获取某一首歌曲的id，但是实际过程中发现post的负载是经过js加密而且高度混淆的，虽然我一直在研究逆向这个东西，但是以我">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/image-20231106155956272.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/image-20231106160014263.png">
+<meta property="article:published_time" content="2023-11-06T05:58:50.000Z">
+<meta property="article:modified_time" content="2023-11-19T04:14:13.303Z">
+<meta property="article:author" content="pipi">
+<meta property="article:tag" content="爬虫">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/image-20231106155956272.png">
+
+
+<link rel="canonical" href="http://example.com/2023/11/06/%E7%88%AC%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%9F%90%E6%AD%8C%E6%89%8B%E6%89%80%E6%9C%89%E4%B8%93%E8%BE%91%E5%86%85%E6%AD%8C%E6%9B%B2%E7%9A%84%E7%88%AC%E8%99%AB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/11/06/%E7%88%AC%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%9F%90%E6%AD%8C%E6%89%8B%E6%89%80%E6%9C%89%E4%B8%93%E8%BE%91%E5%86%85%E6%AD%8C%E6%9B%B2%E7%9A%84%E7%88%AC%E8%99%AB/","path":"2023/11/06/爬取网易云音乐某歌手所有专辑内歌曲的爬虫/","title":"爬取网易云音乐某歌手所有专辑内歌曲的爬虫"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>爬取网易云音乐某歌手所有专辑内歌曲的爬虫 | 后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">后花园</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">思路：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">代码编写：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E4%BD%93%E7%BB%93%E6%9E%84%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">总体结构：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%EF%BC%9A"><span class="nav-number">3.2.</span> <span class="nav-text">函数：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F%E5%B9%B6%E5%AF%BC%E5%85%A5%E5%BA%93%EF%BC%9A"><span class="nav-number">3.2.1.</span> <span class="nav-text">定义变量并导入库：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A6%96%E5%85%88%EF%BC%9A"><span class="nav-number">3.2.2.</span> <span class="nav-text">首先：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%84%B6%E5%90%8E%EF%BC%9A"><span class="nav-number">3.2.3.</span> <span class="nav-text">然后：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A5%E7%9D%80%EF%BC%9A"><span class="nav-number">3.2.4.</span> <span class="nav-text">接着：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%90%8E%EF%BC%9A"><span class="nav-number">3.2.5.</span> <span class="nav-text">最后：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#main%EF%BC%9A"><span class="nav-number">3.3.</span> <span class="nav-text">main：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">4.</span> <span class="nav-text">执行结果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-end"><span class="nav-number">5.</span> <span class="nav-text">The end</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">pipi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/06/%E7%88%AC%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%9F%90%E6%AD%8C%E6%89%8B%E6%89%80%E6%9C%89%E4%B8%93%E8%BE%91%E5%86%85%E6%AD%8C%E6%9B%B2%E7%9A%84%E7%88%AC%E8%99%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="pipi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="爬取网易云音乐某歌手所有专辑内歌曲的爬虫 | 后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          爬取网易云音乐某歌手所有专辑内歌曲的爬虫
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-06 13:58:50" itemprop="dateCreated datePublished" datetime="2023-11-06T13:58:50+08:00">2023-11-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-19 12:14:13" itemprop="dateModified" datetime="2023-11-19T12:14:13+08:00">2023-11-19</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Valine：</span>
+  
+    <a title="valine" href="/2023/11/06/%E7%88%AC%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%9F%90%E6%AD%8C%E6%89%8B%E6%89%80%E6%9C%89%E4%B8%93%E8%BE%91%E5%86%85%E6%AD%8C%E6%9B%B2%E7%9A%84%E7%88%AC%E8%99%AB/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/06/%E7%88%AC%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%9F%90%E6%AD%8C%E6%89%8B%E6%89%80%E6%9C%89%E4%B8%93%E8%BE%91%E5%86%85%E6%AD%8C%E6%9B%B2%E7%9A%84%E7%88%AC%E8%99%AB/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h1><p>​	开始打算弄个逆向工程，然后把网易云的歌爬下来，但是这件事情是违法的，绝对不是学艺不精，所以我又搜了一个网易云的开放API，虽然下载不了付费歌曲，但是让我这个小白练一练爬虫还是绰绰有余的。</p>
+<h1 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h1><p>​	我最开始以为这个东西很简单，所以我试着通过网易云的搜索栏和post指令获取某一首歌曲的id，但是实际过程中发现post的负载是经过js加密而且高度混淆的，虽然我一直在研究逆向这个东西，但是以我现在目前水平搞出来花费的时间太长，所以我找到网易云的开放api接口来获取免费的音乐。</p>
+<h1 id="代码编写："><a href="#代码编写：" class="headerlink" title="代码编写："></a>代码编写：</h1><h2 id="总体结构："><a href="#总体结构：" class="headerlink" title="总体结构："></a>总体结构：</h2><p>​	 	通过用户输入网易云某个作者的网易云某个作者的热门作品界面链接来获取该作者所有作品。网易云音乐并不是单首音乐作为一个列表的形式展示在一个页面里的，而是放在一个个对应的专辑里面，所以我们先需要找到作者id，再通过作者id找到该作者所有专辑的id，再通过专辑找到单首音乐id，再通过单首音乐id下载该歌曲，其中还涉及到url的拼接；文件的写入；链表，正则表达式，requests,BeautifulSoup4，正则表达式等的使用。总体下来还是很繁琐的。</p>
+<h2 id="函数："><a href="#函数：" class="headerlink" title="函数："></a>函数：</h2><h3 id="定义变量并导入库："><a href="#定义变量并导入库：" class="headerlink" title="定义变量并导入库："></a>定义变量并导入库：</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line">nnnum = <span class="number">1</span></span><br><span class="line">nnum = <span class="number">0</span></span><br><span class="line">key = [<span class="number">0</span>]</span><br><span class="line">tag = <span class="string">&#x27;=&#x27;</span></span><br><span class="line">n = <span class="number">0</span></span><br><span class="line">music_id = [<span class="number">0</span>] * <span class="number">100</span></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) &quot;</span></span><br><span class="line">                  <span class="string">&quot;Chrome/58.0.3029.110 Safari/537.3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Accept&quot;</span>: <span class="string">&quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="首先："><a href="#首先：" class="headerlink" title="首先："></a>首先：</h3><p>​	我们需要把用户输入的链接进行处理得到作者id。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">这里的tag是字符串类型的等于号,我们将用户输入的url传入函数,并通过split方法将字符串分为两半分别写入index列表的第一跟第二个元素，然后返回第二个元素。</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">id</span>(<span class="params">url, tag</span>):</span><br><span class="line">    index = url.split(tag)</span><br><span class="line">    <span class="keyword">return</span> index[<span class="number">1</span>] <span class="keyword">if</span> <span class="built_in">len</span>(index) &gt; <span class="number">1</span> <span class="keyword">else</span> exit(<span class="string">&#x27;输入错误&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="然后："><a href="#然后：" class="headerlink" title="然后："></a>然后：</h3><p>​	我们再写一个方法把每首歌一一对应的专辑id提取出来。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_id</span>(<span class="params">url, headers, n</span>):</span><br><span class="line">    <span class="comment"># 利用requests和bs4将需要的信息找到并提取出来</span></span><br><span class="line">    album_repo = requests.get(url, headers=headers) </span><br><span class="line">    album_repo.encoding = <span class="string">&#x27;utf-8&#x27;</span></span><br><span class="line">    album_soup = BeautifulSoup(album_repo.text, <span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">    album_ids = album_soup.find_all(<span class="string">&#x27;a&#x27;</span>, &#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;tit s-fc0&#x27;</span>&#125;)</span><br><span class="line">    <span class="comment"># print(type(album_ids))</span></span><br><span class="line">    <span class="comment"># 用album_id在album_ids中遍历</span></span><br><span class="line">    <span class="keyword">for</span> album_id <span class="keyword">in</span> album_ids:</span><br><span class="line"> 		<span class="comment"># 利用.get方法将字典中href键的值提取出来，再利用id()方法将专辑id存放在music_id[]这个链表中</span></span><br><span class="line">        music_id[n] = <span class="built_in">id</span>(album_id.get(<span class="string">&#x27;href&#x27;</span>), tag)</span><br><span class="line">        n += <span class="number">1</span></span><br><span class="line">	<span class="comment"># 一下用于while循环结束的条件，album_ids</span></span><br><span class="line">    <span class="keyword">return</span> album_ids</span><br></pre></td></tr></table></figure>
+
+<h3 id="接着："><a href="#接着：" class="headerlink" title="接着："></a>接着：</h3><p>​		我们再写一个函数用专辑id找到对应歌曲的id和歌曲的名称。（这里用re库跟正则表达式会比较方便一点）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 因为是用一个循环调用这个函数，所以需要把num传进去，事实上这样更加方便</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_name_id</span>(<span class="params">num</span>):</span><br><span class="line">    <span class="comment"># 得到歌曲页面url</span></span><br><span class="line">    url = <span class="string">&#x27;https://music.163.com/album?id=&#x27;</span> + <span class="built_in">str</span>(music_id[num])</span><br><span class="line">    song_repo = requests.get(url=url, headers=headers)</span><br><span class="line">    song_repo.encoding = <span class="string">&#x27;utf-8&#x27;</span></span><br><span class="line">    song_soup = BeautifulSoup(song_repo.text, <span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">    song = song_soup.find(<span class="string">&#x27;ul&#x27;</span>, &#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;f-hide&#x27;</span>&#125;)</span><br><span class="line">    <span class="comment"># 如果不明白可以把各个阶段的变量打印出来，我就是这么干的</span></span><br><span class="line">    <span class="comment"># print(str(song))</span></span><br><span class="line">    <span class="comment"># print(song)</span></span><br><span class="line">    <span class="comment"># 正则表达式加re库提取song_name和song_id</span></span><br><span class="line">    pattern = <span class="string">r&#x27;\d+&#x27;</span></span><br><span class="line">    song_id = re.findall(pattern, <span class="built_in">str</span>(song))</span><br><span class="line">    pattern = <span class="string">r&#x27;[\u4e00-\u9fa5]+&#x27;</span></span><br><span class="line">    song_name = re.findall(pattern, <span class="built_in">str</span>(song))</span><br><span class="line">    <span class="comment"># print(song_id[0])</span></span><br><span class="line">    <span class="comment"># print(song_name[0])</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> song_name != []:</span><br><span class="line">        <span class="keyword">return</span> song_name[<span class="number">0</span>], song_id[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># 程序结束是在这里结束的，并不是在main函数结束。</span></span><br><span class="line">        <span class="comment"># 最后我发现在这里结束比在main函数结束更加方便。</span></span><br><span class="line">        exit(<span class="string">&#x27;程序结束，共下载&#x27;</span> + <span class="built_in">str</span>(nnum) + <span class="string">&#x27;首歌曲&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="最后："><a href="#最后：" class="headerlink" title="最后："></a>最后：</h3><p>我们用获取的id来下载歌曲</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">downloda</span>(<span class="params">name, music_id, nnnum</span>):</span><br><span class="line">    downloda_api = <span class="string">&#x27;http://music.163.com/song/media/outer/url?id=&#x27;</span> + music_id</span><br><span class="line">    music = requests.get(url=downloda_api, headers=headers)</span><br><span class="line">    <span class="comment">#   下载歌曲</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="built_in">str</span>(nnnum) + <span class="string">&#x27;.&#x27;</span> + name + <span class="string">&#x27;.mp3&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">            file.write(music.content)</span><br><span class="line">            <span class="built_in">print</span>(<span class="built_in">str</span>(nnnum) + <span class="string">&#x27;.&#x27;</span> + name + <span class="string">&#x27;下载成功&#x27;</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;下载异常，歌曲可能需要vip权限才能下载&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="main："><a href="#main：" class="headerlink" title="main："></a>main：</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">url_album = <span class="built_in">input</span>(<span class="string">&#x27;请输入网易云音乐歌手页面链接&#x27;</span>)</span><br><span class="line"><span class="comment"># 将专辑id写入music_id</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    url = <span class="string">&#x27;https://music.163.com/artist/album?id=&#x27;</span> + <span class="built_in">id</span>(url_album, tag) + <span class="string">&#x27;&amp;limit=12&amp;offset=&#x27;</span> + <span class="built_in">str</span>(n)</span><br><span class="line">    <span class="comment"># 用key控制程序结束</span></span><br><span class="line">    key = get_id(url, headers, n)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> key:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="built_in">print</span>(music_id)</span><br><span class="line">    <span class="comment"># 翻页</span></span><br><span class="line">    n += <span class="number">12</span></span><br><span class="line">    <span class="comment">#用sleep()主要是开始调试代码的时候怕不受控，一秒发出去几百条请求，后来也就没删。</span></span><br><span class="line">    sleep(<span class="number">1</span>)</span><br><span class="line"><span class="comment"># 歌曲名称，id的获取和歌曲的下载</span></span><br><span class="line"><span class="keyword">while</span> nnum &lt; <span class="built_in">len</span>(music_id):</span><br><span class="line">    song_name, song_id = get_name_id(nnum)</span><br><span class="line">    downloda(song_name, song_id, nnnum)</span><br><span class="line">    nnum += <span class="number">1</span></span><br><span class="line">    nnnum += <span class="number">1</span></span><br><span class="line">    sleep(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="执行结果"><a href="#执行结果" class="headerlink" title="执行结果"></a>执行结果</h1><p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/image-20231106155956272.png" alt="image-20231106155956272"></p>
+<p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/image-20231106160014263.png" alt="image-20231106160014263"></p>
+<h1 id="The-end"><a href="#The-end" class="headerlink" title="The end"></a>The end</h1><p>总的来说写这个的时候让自己python各种不足暴露出来，心酸满满，收获满满。</p>
+<p>同时还可以用pyinstaller进行打包。<a target="_blank" rel="noopener" href="https://github.com/pipi0960/typora_image/blob/main/%E7%BD%91%E6%98%93%E4%BA%91%E7%88%AC%E5%8F%96%E9%9F%B3%E4%B9%90.exe">Github下载链接</a></p>
+<p><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1FNuVrN-y4UhtM74A1DGUtA">百度盘下载地址</a>    提取码：ellb</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%88%AC%E8%99%AB/" rel="tag"># 爬虫</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/11/04/c%E8%AF%AD%E8%A8%80%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="prev" title="c语言二叉树（存档，未验证，To be continue）">
+                  <i class="fa fa-angle-left"></i> c语言二叉树（存档，未验证，To be continue）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/11/17/typora%E5%AD%A6%E4%B9%A0%E7%89%88/" rel="next" title="typora学习版">
+                  typora学习版 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">pipi</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"8FiyFZkhWInNXVB0lIUmbtPr-gzGzoHsz","appKey":"LEP7VhClCq3n9vDCc2wv5on6","serverURLs":"https://8fiyfzkh.lc-cn-n1-shared.com","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":true,"enableQQ":true,"requiredFields":[],"el":"#valine-comments","path":"/2023/11/06/%E7%88%AC%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%9F%90%E6%AD%8C%E6%89%8B%E6%89%80%E6%9C%89%E4%B8%93%E8%BE%91%E5%86%85%E6%AD%8C%E6%9B%B2%E7%9A%84%E7%88%AC%E8%99%AB/"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.valine.el)
+    .then(() => NexT.utils.getScript(
+      'https://fastly.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js',
+      { condition: window.Valine }
+    ))
+    .then(() => {
+      new Valine(CONFIG.valine);
+    });
+});
+</script>
+
+</body>
+</html>

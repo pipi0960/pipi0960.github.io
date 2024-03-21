@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697package maini">
+<meta property="og:type" content="article">
+<meta property="og:title" content="生成创世区块并挖矿生成第二个区块">
+<meta property="og:url" content="http://example.com/2024/03/21/%E7%94%9F%E6%88%90%E5%88%9B%E4%B8%96%E5%8C%BA%E5%9D%97%E5%B9%B6%E6%8C%96%E7%9F%BF%E7%94%9F%E6%88%90%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8C%BA%E5%9D%97/index.html">
+<meta property="og:site_name" content="后花园">
+<meta property="og:description" content="代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697package maini">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-21T11:02:21.000Z">
+<meta property="article:modified_time" content="2024-03-21T11:03:16.052Z">
+<meta property="article:author" content="pipi">
+<meta property="article:tag" content="区块链">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2024/03/21/%E7%94%9F%E6%88%90%E5%88%9B%E4%B8%96%E5%8C%BA%E5%9D%97%E5%B9%B6%E6%8C%96%E7%9F%BF%E7%94%9F%E6%88%90%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8C%BA%E5%9D%97/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/03/21/%E7%94%9F%E6%88%90%E5%88%9B%E4%B8%96%E5%8C%BA%E5%9D%97%E5%B9%B6%E6%8C%96%E7%9F%BF%E7%94%9F%E6%88%90%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8C%BA%E5%9D%97/","path":"2024/03/21/生成创世区块并挖矿生成第二个区块/","title":"生成创世区块并挖矿生成第二个区块"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>生成创世区块并挖矿生成第二个区块 | 后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">后花园</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text">代码</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">pipi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/21/%E7%94%9F%E6%88%90%E5%88%9B%E4%B8%96%E5%8C%BA%E5%9D%97%E5%B9%B6%E6%8C%96%E7%9F%BF%E7%94%9F%E6%88%90%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8C%BA%E5%9D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="pipi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="生成创世区块并挖矿生成第二个区块 | 后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          生成创世区块并挖矿生成第二个区块
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-03-21 19:02:21 / 修改时间：19:03:16" itemprop="dateCreated datePublished" datetime="2024-03-21T19:02:21+08:00">2024-03-21</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Valine：</span>
+  
+    <a title="valine" href="/2024/03/21/%E7%94%9F%E6%88%90%E5%88%9B%E4%B8%96%E5%8C%BA%E5%9D%97%E5%B9%B6%E6%8C%96%E7%9F%BF%E7%94%9F%E6%88%90%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8C%BA%E5%9D%97/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/03/21/%E7%94%9F%E6%88%90%E5%88%9B%E4%B8%96%E5%8C%BA%E5%9D%97%E5%B9%B6%E6%8C%96%E7%9F%BF%E7%94%9F%E6%88%90%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8C%BA%E5%9D%97/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;crypto/sha256&quot;</span></span><br><span class="line">	<span class="string">&quot;encoding/hex&quot;</span></span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;strconv&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Block represents each &#x27;item&#x27; in the blockchain</span></span><br><span class="line"><span class="keyword">type</span> Block <span class="keyword">struct</span> &#123;</span><br><span class="line">	Index      <span class="type">int</span></span><br><span class="line">	Timestamp  <span class="type">string</span></span><br><span class="line">	Data       <span class="type">string</span></span><br><span class="line">	Hash       <span class="type">string</span></span><br><span class="line">	PrevHash   <span class="type">string</span></span><br><span class="line">	Nonce      <span class="type">int</span></span><br><span class="line">	Difficulty <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Blockchain is a series of validated Blocks</span></span><br><span class="line"><span class="keyword">var</span> Blockchain []Block</span><br><span class="line"></span><br><span class="line"><span class="comment">// calculateHash is a simple SHA256 hashing function</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">calculateHash</span><span class="params">(block Block)</span></span> <span class="type">string</span> &#123;</span><br><span class="line">	record := strconv.Itoa(block.Index) + block.Timestamp + block.Data + block.PrevHash + strconv.Itoa(block.Nonce)</span><br><span class="line">	h := sha256.New()</span><br><span class="line">	h.Write([]<span class="type">byte</span>(record))</span><br><span class="line">	hashed := h.Sum(<span class="literal">nil</span>)</span><br><span class="line">	<span class="keyword">return</span> hex.EncodeToString(hashed)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// generateBlock creates a new block using previous block&#x27;s hash</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">generateBlock</span><span class="params">(oldBlock Block, Data <span class="type">string</span>, Difficulty <span class="type">int</span>)</span></span> Block &#123;</span><br><span class="line">	<span class="keyword">var</span> newBlock Block</span><br><span class="line"></span><br><span class="line">	t := time.Now()</span><br><span class="line"></span><br><span class="line">	newBlock.Index = oldBlock.Index + <span class="number">1</span></span><br><span class="line">	newBlock.Timestamp = t.String()</span><br><span class="line">	newBlock.Data = Data</span><br><span class="line">	newBlock.PrevHash = oldBlock.Hash</span><br><span class="line">	newBlock.Difficulty = Difficulty</span><br><span class="line">	newBlock.Hash = calculateHash(newBlock)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Implement the Proof of Work (PoW)</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; ; i++ &#123;</span><br><span class="line">		<span class="comment">// hex := fmt.Sprintf(&quot;%x&quot;, i)</span></span><br><span class="line">		newBlock.Nonce = i</span><br><span class="line">		<span class="keyword">if</span> !isHashValid(calculateHash(newBlock), newBlock.Difficulty) &#123;</span><br><span class="line">			fmt.Println(calculateHash(newBlock), <span class="string">&quot; do more work!&quot;</span>)</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			fmt.Println(calculateHash(newBlock), <span class="string">&quot; work done!&quot;</span>)</span><br><span class="line">			newBlock.Hash = calculateHash(newBlock)</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> newBlock</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// isHashValid checks if the hash meets the criteria defined by difficulty</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">isHashValid</span><span class="params">(hash <span class="type">string</span>, difficulty <span class="type">int</span>)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">	prefix := <span class="string">&quot;&quot;</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; difficulty; i++ &#123;</span><br><span class="line">		prefix += <span class="string">&quot;0&quot;</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> hash[:difficulty] == prefix</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// Set difficulty</span></span><br><span class="line">	difficulty := <span class="number">4</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Create the genesis block</span></span><br><span class="line">	t := time.Now()</span><br><span class="line">	genesisBlock := Block&#123;<span class="number">0</span>, t.String(), <span class="string">&quot;Genesis Block&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="number">0</span>, difficulty&#125;</span><br><span class="line">	genesisBlock.Hash = calculateHash(genesisBlock)</span><br><span class="line">	Blockchain = <span class="built_in">append</span>(Blockchain, genesisBlock)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Add a new block</span></span><br><span class="line">	newBlock := generateBlock(genesisBlock, <span class="string">&quot;Block #1&quot;</span>, difficulty)</span><br><span class="line">	Blockchain = <span class="built_in">append</span>(Blockchain, newBlock)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Print the blockchain</span></span><br><span class="line">	<span class="keyword">for</span> _, block := <span class="keyword">range</span> Blockchain &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;Index: %d\n&quot;</span>, block.Index)</span><br><span class="line">		fmt.Printf(<span class="string">&quot;Timestamp: %s\n&quot;</span>, block.Timestamp)</span><br><span class="line">		fmt.Printf(<span class="string">&quot;Data: %s\n&quot;</span>, block.Data)</span><br><span class="line">		fmt.Printf(<span class="string">&quot;Hash: %s\n&quot;</span>, block.Hash)</span><br><span class="line">		fmt.Printf(<span class="string">&quot;nonce：%d PrevHash: %s\n&quot;</span>, block.Nonce, block.PrevHash)</span><br><span class="line">		fmt.Println()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="tag"># 区块链</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/21/chatglm3%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8%EF%BC%88%E9%99%84%E6%BA%90%E7%A0%81%E5%8F%8A%E6%A8%A1%E5%9E%8B%EF%BC%89/" rel="prev" title="chatglm3简单应用（附源码及模型）">
+                  <i class="fa fa-angle-left"></i> chatglm3简单应用（附源码及模型）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/03/21/%E5%85%A8%E6%8E%92%E5%88%97/" rel="next" title="全排列">
+                  全排列 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">pipi</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"8FiyFZkhWInNXVB0lIUmbtPr-gzGzoHsz","appKey":"LEP7VhClCq3n9vDCc2wv5on6","serverURLs":"https://8fiyfzkh.lc-cn-n1-shared.com","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":true,"enableQQ":true,"requiredFields":[],"el":"#valine-comments","path":"/2024/03/21/%E7%94%9F%E6%88%90%E5%88%9B%E4%B8%96%E5%8C%BA%E5%9D%97%E5%B9%B6%E6%8C%96%E7%9F%BF%E7%94%9F%E6%88%90%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8C%BA%E5%9D%97/"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.valine.el)
+    .then(() => NexT.utils.getScript(
+      'https://fastly.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js',
+      { condition: window.Valine }
+    ))
+    .then(() => {
+      new Valine(CONFIG.valine);
+    });
+});
+</script>
+
+</body>
+</html>

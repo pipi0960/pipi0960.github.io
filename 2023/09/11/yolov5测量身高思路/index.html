@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="大概思路​	我们可以想象一下如果我们利用相同像素的相机进行数据采集，那么我们站在距离摄像机固定远的位置我们所占的像素大小也是基本不变的。 ​	利用这个规律我们可以知道一个人在图像中所占像素大小，并根据所占像素大小来计算这个人的身高。 代码实现我们首先需要读取摄像头 123456camera &#x3D; cv2.VideoCapture(0)  # 读取摄像头，0代表手提电脑自带的摄像头，若改成1，2，3.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="yolov5测量身高思路">
+<meta property="og:url" content="http://example.com/2023/09/11/yolov5%E6%B5%8B%E9%87%8F%E8%BA%AB%E9%AB%98%E6%80%9D%E8%B7%AF/index.html">
+<meta property="og:site_name" content="后花园">
+<meta property="og:description" content="大概思路​	我们可以想象一下如果我们利用相同像素的相机进行数据采集，那么我们站在距离摄像机固定远的位置我们所占的像素大小也是基本不变的。 ​	利用这个规律我们可以知道一个人在图像中所占像素大小，并根据所占像素大小来计算这个人的身高。 代码实现我们首先需要读取摄像头 123456camera &#x3D; cv2.VideoCapture(0)  # 读取摄像头，0代表手提电脑自带的摄像头，若改成1，2，3.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309160949130.jpg">
+<meta property="article:published_time" content="2023-09-11T02:20:48.000Z">
+<meta property="article:modified_time" content="2023-09-16T01:49:31.017Z">
+<meta property="article:author" content="pipi">
+<meta property="article:tag" content="计算机视觉">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309160949130.jpg">
+
+
+<link rel="canonical" href="http://example.com/2023/09/11/yolov5%E6%B5%8B%E9%87%8F%E8%BA%AB%E9%AB%98%E6%80%9D%E8%B7%AF/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/09/11/yolov5%E6%B5%8B%E9%87%8F%E8%BA%AB%E9%AB%98%E6%80%9D%E8%B7%AF/","path":"2023/09/11/yolov5测量身高思路/","title":"yolov5测量身高思路"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>yolov5测量身高思路 | 后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">后花园</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%A7%E6%A6%82%E6%80%9D%E8%B7%AF"><span class="nav-number">1.</span> <span class="nav-text">大概思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="nav-number"></span> <span class="nav-text">效果展示</span></a></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">pipi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/11/yolov5%E6%B5%8B%E9%87%8F%E8%BA%AB%E9%AB%98%E6%80%9D%E8%B7%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="pipi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="yolov5测量身高思路 | 后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          yolov5测量身高思路
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-11 10:20:48" itemprop="dateCreated datePublished" datetime="2023-09-11T10:20:48+08:00">2023-09-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-16 09:49:31" itemprop="dateModified" datetime="2023-09-16T09:49:31+08:00">2023-09-16</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Valine：</span>
+  
+    <a title="valine" href="/2023/09/11/yolov5%E6%B5%8B%E9%87%8F%E8%BA%AB%E9%AB%98%E6%80%9D%E8%B7%AF/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/09/11/yolov5%E6%B5%8B%E9%87%8F%E8%BA%AB%E9%AB%98%E6%80%9D%E8%B7%AF/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h4 id="大概思路"><a href="#大概思路" class="headerlink" title="大概思路"></a>大概思路</h4><p>​	我们可以想象一下如果我们利用相同像素的相机进行数据采集，那么我们站在距离摄像机固定远的位置我们所占的像素大小也是基本不变的。</p>
+<p>​	利用这个规律我们可以知道一个人在图像中所占像素大小，并根据所占像素大小来计算这个人的身高。</p>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><p>我们首先需要读取摄像头</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">camera = cv2.VideoCapture(<span class="number">0</span>)  <span class="comment"># 读取摄像头，0代表手提电脑自带的摄像头，若改成1，2，3...则可以调用其他摄像头</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	k = cv2.waitKey(<span class="number">1</span>)</span><br><span class="line">	ret, img0 = camera.read() <span class="comment"># 读取当前帧，为图片</span></span><br><span class="line">    cv2.namedWindow(<span class="string">&#x27;camera&#x27;</span>)</span><br><span class="line">	cv2.imshow(<span class="string">&#x27;camera&#x27;</span>, img0)</span><br></pre></td></tr></table></figure>
+
+<p>定义一个测量身高的函数，并测量标准值（需要你站在里摄像头正前方1米处测量自己纵向占多少像素，再用你的身高除以这个像素大小，就可以得到标准值）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">height_detect</span>(<span class="params">xywh_list, height</span>):</span><br><span class="line">	 <span class="comment"># 将识别到的中心点坐标传入</span></span><br><span class="line">    _, _, _, h = xywh_list[<span class="number">0</span>]</span><br><span class="line">	std = <span class="string">&#x27;&#x27;</span> <span class="comment">#你站在里摄像头正前方1米处测量自己纵向占多少像素，再用你的身高除以这个像素大小</span></span><br><span class="line">    <span class="comment"># 去归一化</span></span><br><span class="line">    h *= height <span class="comment"># height为摄像机获取图像的y轴像素大小</span></span><br><span class="line">    h *= std <span class="comment">#std为标准值</span></span><br><span class="line">    <span class="keyword">return</span> h</span><br></pre></td></tr></table></figure>
+
+<p>然后我们调用yolov5的检测函数进行图像检测，详见[重构yolov5-6-0-detect-py进行目标检测](<a target="_blank" rel="noopener" href="https://pipi0960.github.io/2023/09/11/%E9%87%8D%E6%9E%84yolov5-6-0-detect-py%E8%BF%9B%E8%A1%8C%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/">重构yolov5-6.0 detect.py进行目标检测 | 后花园 (pipi0960.github.io)</a>)</p>
+<p>最后利用main函数将程序连通起来</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">model, device, half, stride, names, imgsz = get_model()</span><br><span class="line">camera = cv2.VideoCapture(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    ret, img0 = camera.read()</span><br><span class="line">    <span class="keyword">if</span> ret:</span><br><span class="line">        img0 = np.array(img0)</span><br><span class="line">        img0 = cv2.cvtColor(img0, cv2.COLOR_BGRA2BGR)</span><br><span class="line">    	img, xywh_list = out_img(img0, model, device, half, stride, names, imgsz)</span><br><span class="line">    <span class="keyword">if</span> xywh_list:</span><br><span class="line">    	<span class="built_in">print</span>(height_detect(xywh_list, 相机y轴总像素大小))</span><br><span class="line">    cv2.imshow(<span class="string">&#x27;camera&#x27;</span>, img)</span><br><span class="line">    img = cv2.cvtColor(img, cv2.COLOR_BGRA2BGR)</span><br><span class="line">    <span class="comment"># 展示检测结果</span></span><br><span class="line">    cv2.imshow(<span class="string">&#x27;窗口名称&#x27;</span>, img)</span><br><span class="line">	<span class="comment"># 不加waitKey会卡死</span></span><br><span class="line">    k = cv2.waitKey(<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># 如果检测到esc建，结束程序</span></span><br><span class="line">    <span class="keyword">if</span> k % <span class="number">256</span> == <span class="number">27</span>:</span><br><span class="line">        exit(<span class="string">&#x27;程序已结束&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h1><p><img src="https://raw.githubusercontent.com/pipi0960/typora_image/main/img/202309160949130.jpg" alt="37c112e8e9f3933368783990ed122f4"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" rel="tag"># 计算机视觉</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/10/%E6%8A%93%E5%8F%96%E5%B1%8F%E5%B9%95%E5%86%85%E5%AE%B9%E5%B9%B6%E5%B1%95%E7%A4%BA%E5%87%BA%E6%9D%A5/" rel="prev" title="抓取屏幕内容并展示出来">
+                  <i class="fa fa-angle-left"></i> 抓取屏幕内容并展示出来
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/09/11/%E9%87%8D%E6%9E%84yolov5-6-0-detect-py%E8%BF%9B%E8%A1%8C%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" rel="next" title="重构yolov5-6.0 detect.py进行目标检测">
+                  重构yolov5-6.0 detect.py进行目标检测 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">pipi</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"8FiyFZkhWInNXVB0lIUmbtPr-gzGzoHsz","appKey":"LEP7VhClCq3n9vDCc2wv5on6","serverURLs":"https://8fiyfzkh.lc-cn-n1-shared.com","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":true,"enableQQ":true,"requiredFields":[],"el":"#valine-comments","path":"/2023/09/11/yolov5%E6%B5%8B%E9%87%8F%E8%BA%AB%E9%AB%98%E6%80%9D%E8%B7%AF/"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.valine.el)
+    .then(() => NexT.utils.getScript(
+      'https://fastly.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js',
+      { condition: window.Valine }
+    ))
+    .then(() => {
+      new Valine(CONFIG.valine);
+    });
+});
+</script>
+
+</body>
+</html>

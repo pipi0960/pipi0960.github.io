@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="代码实现模型参数获取按照惯例我们先导入包 12345import torchfrom config import *from models.experimental import attempt_loadfrom utils.general import check_img_sizefrom utils.torch_utils import select_device  接下来获取 . pt模型的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重构yolov5-6.0 detect.py进行目标检测">
+<meta property="og:url" content="http://example.com/2023/09/11/%E9%87%8D%E6%9E%84yolov5-6-0-detect-py%E8%BF%9B%E8%A1%8C%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/index.html">
+<meta property="og:site_name" content="后花园">
+<meta property="og:description" content="代码实现模型参数获取按照惯例我们先导入包 12345import torchfrom config import *from models.experimental import attempt_loadfrom utils.general import check_img_sizefrom utils.torch_utils import select_device  接下来获取 . pt模型的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-11T02:41:44.000Z">
+<meta property="article:modified_time" content="2023-11-17T16:05:50.591Z">
+<meta property="article:author" content="pipi">
+<meta property="article:tag" content="计算机视觉">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/09/11/%E9%87%8D%E6%9E%84yolov5-6-0-detect-py%E8%BF%9B%E8%A1%8C%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/09/11/%E9%87%8D%E6%9E%84yolov5-6-0-detect-py%E8%BF%9B%E8%A1%8C%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/","path":"2023/09/11/重构yolov5-6-0-detect-py进行目标检测/","title":"重构yolov5-6.0 detect.py进行目标检测"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>重构yolov5-6.0 detect.py进行目标检测 | 后花园</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">后花园</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%8F%82%E6%95%B0%E8%8E%B7%E5%8F%96"><span class="nav-number">1.1.</span> <span class="nav-text">模型参数获取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E7%9B%AE%E6%A0%87%E5%9B%BE%E5%83%8F%E8%BF%9B%E8%A1%8C%E6%A3%80%E6%9F%A5"><span class="nav-number">1.2.</span> <span class="nav-text">对目标图像进行检查</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#main%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="nav-number">1.3.</span> <span class="nav-text">main函数调用</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">pipi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/11/%E9%87%8D%E6%9E%84yolov5-6-0-detect-py%E8%BF%9B%E8%A1%8C%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="pipi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="后花园">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="重构yolov5-6.0 detect.py进行目标检测 | 后花园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          重构yolov5-6.0 detect.py进行目标检测
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-11 10:41:44" itemprop="dateCreated datePublished" datetime="2023-09-11T10:41:44+08:00">2023-09-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-18 00:05:50" itemprop="dateModified" datetime="2023-11-18T00:05:50+08:00">2023-11-18</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Valine：</span>
+  
+    <a title="valine" href="/2023/09/11/%E9%87%8D%E6%9E%84yolov5-6-0-detect-py%E8%BF%9B%E8%A1%8C%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/09/11/%E9%87%8D%E6%9E%84yolov5-6-0-detect-py%E8%BF%9B%E8%A1%8C%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><h4 id="模型参数获取"><a href="#模型参数获取" class="headerlink" title="模型参数获取"></a>模型参数获取</h4><p>按照惯例我们先导入包</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> config <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> models.experimental <span class="keyword">import</span> attempt_load</span><br><span class="line"><span class="keyword">from</span> utils.general <span class="keyword">import</span> check_img_size</span><br><span class="line"><span class="keyword">from</span> utils.torch_utils <span class="keyword">import</span> select_device</span><br></pre></td></tr></table></figure>
+
+<p>接下来获取 . pt模型的参数，此函数返回model, device, half, stride, names, imgsz对应值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_model</span>():</span><br><span class="line">    device = select_device(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    <span class="comment"># print(device.type)</span></span><br><span class="line"></span><br><span class="line">    half = device.<span class="built_in">type</span> != <span class="string">&#x27;cpu&#x27;</span></span><br><span class="line"></span><br><span class="line">    model = torch.jit.load(WEIGHTS) <span class="keyword">if</span> <span class="string">&#x27;torchscript&#x27;</span> <span class="keyword">in</span> WEIGHTS <span class="keyword">else</span> attempt_load(WEIGHTS, map_location=device)</span><br><span class="line">    stride = <span class="built_in">int</span>(model.stride.<span class="built_in">max</span>())  <span class="comment"># model stride</span></span><br><span class="line">    names = model.module.names <span class="keyword">if</span> <span class="built_in">hasattr</span>(model, <span class="string">&#x27;module&#x27;</span>) <span class="keyword">else</span> model.names  <span class="comment"># get class names</span></span><br><span class="line">    <span class="keyword">if</span> half:</span><br><span class="line">        model.half()</span><br><span class="line">    imgsz = check_img_size(IMGSZ, s=stride)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> model, device, half, stride, names, imgsz</span><br></pre></td></tr></table></figure>
+
+<h4 id="对目标图像进行检查"><a href="#对目标图像进行检查" class="headerlink" title="对目标图像进行检查"></a>对目标图像进行检查</h4><p>导入包</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> config <span class="keyword">import</span> CONF_THRES, IOU_THRES, LINE_THICKNESS, HIDE_LABELS, HIDE_CONF</span><br><span class="line"><span class="keyword">from</span> utils.augmentations <span class="keyword">import</span> letterbox</span><br><span class="line"><span class="keyword">from</span> utils.general <span class="keyword">import</span> non_max_suppression, scale_coords, xyxy2xywh</span><br><span class="line"><span class="keyword">from</span> utils.plots <span class="keyword">import</span> Annotator, colors</span><br></pre></td></tr></table></figure>
+
+<p>此函数需要传入img0需要被检测的图像；model, device, half, stride, names, imgsz为 .pt模型的参数，并返回标记好的图像跟坐标信息（详情见最后一行注释）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@torch.no_grad()</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">out_img</span>(<span class="params">img0, model, device, half, stride, names, imgsz</span>):</span><br><span class="line">    <span class="comment"># Padded resize</span></span><br><span class="line">    img = letterbox(img0, imgsz, stride=stride, auto=<span class="literal">True</span>)[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># Convert</span></span><br><span class="line">    img = img.transpose((<span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>))[::-<span class="number">1</span>]  <span class="comment"># HWC to CHW, BGR to RGB</span></span><br><span class="line">    img = np.ascontiguousarray(img)</span><br><span class="line">    model(torch.zeros(<span class="number">1</span>, <span class="number">3</span>, *imgsz).to(device).type_as(<span class="built_in">next</span>(model.parameters())))  <span class="comment"># run once</span></span><br><span class="line">    img = torch.from_numpy(img).to(device)</span><br><span class="line">    img = img.half() <span class="keyword">if</span> half <span class="keyword">else</span> img.<span class="built_in">float</span>()  <span class="comment"># uint8 to fp16/32</span></span><br><span class="line">    <span class="comment"># 归一化处理</span></span><br><span class="line">    img = img / <span class="number">255.0</span>  <span class="comment"># 0 - 255 to 0.0 - 1.0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(img.shape) == <span class="number">3</span>:</span><br><span class="line">        img = img[<span class="literal">None</span>]  <span class="comment"># expand for batch dim</span></span><br><span class="line"></span><br><span class="line">    pred = model(img, augment=<span class="literal">False</span>, visualize=<span class="literal">False</span>)[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># NMS</span></span><br><span class="line">    pred = non_max_suppression(pred, CONF_THRES, IOU_THRES, <span class="literal">None</span>, <span class="literal">False</span>, max_det=<span class="number">1000</span>)</span><br><span class="line">    <span class="comment"># Process predictions</span></span><br><span class="line">    det = pred[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    im0 = img0.copy()</span><br><span class="line">    gn = torch.tensor(im0.shape)[[<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>]]  <span class="comment"># normalization gain whwh</span></span><br><span class="line"></span><br><span class="line">    annotator = Annotator(im0, line_width=LINE_THICKNESS, example=<span class="built_in">str</span>(names))</span><br><span class="line">    xywh_list = []</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(det):</span><br><span class="line">        <span class="comment"># Rescale boxes from img_size to im0 size</span></span><br><span class="line">        det[:, :<span class="number">4</span>] = scale_coords(img.shape[<span class="number">2</span>:], det[:, :<span class="number">4</span>], im0.shape).<span class="built_in">round</span>()</span><br><span class="line">        <span class="comment"># Write results</span></span><br><span class="line">        <span class="keyword">for</span> *xyxy, conf, cls <span class="keyword">in</span> <span class="built_in">reversed</span>(det):</span><br><span class="line">            c = <span class="built_in">int</span>(cls)  <span class="comment"># integer class</span></span><br><span class="line">            xywh = (xyxy2xywh(torch.tensor(xyxy).view(<span class="number">1</span>, <span class="number">4</span>)) / gn).view(-<span class="number">1</span>).tolist()  <span class="comment"># normalized xywh</span></span><br><span class="line">            xywh_list.append(xywh)</span><br><span class="line">            label = <span class="literal">None</span> <span class="keyword">if</span> HIDE_LABELS <span class="keyword">else</span> (names[c] <span class="keyword">if</span> HIDE_CONF <span class="keyword">else</span> <span class="string">f&#x27;<span class="subst">&#123;names[c]&#125;</span> <span class="subst">&#123;conf:<span class="number">.2</span>f&#125;</span>&#x27;</span>)</span><br><span class="line">            annotator.box_label(xyxy, label, color=colors(c, <span class="literal">True</span>))</span><br><span class="line">    im0 = annotator.result()</span><br><span class="line">    <span class="keyword">return</span> im0, xywh_list  <span class="comment">#返回的im0为标记好的图像文件，xywh_list为标记的坐标信息（x为图像中心点所在像素的横坐标，图像左上角为原点，y同理，w为被标记图像在图像中的像素宽，h为高度）</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="main函数调用"><a href="#main函数调用" class="headerlink" title="main函数调用"></a>main函数调用</h4><p>可以利用while循环中的 cv2.imshow(window_name, img)进行展示。</p>
+<p>也可以利用img.save(img_outpath)保存到本地指定目录。</p>
+<p>或者调用此函数完成一些其他功能</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" rel="tag"># 计算机视觉</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/11/yolov5%E6%B5%8B%E9%87%8F%E8%BA%AB%E9%AB%98%E6%80%9D%E8%B7%AF/" rel="prev" title="yolov5测量身高思路">
+                  <i class="fa fa-angle-left"></i> yolov5测量身高思路
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/09/11/Linux%20to%20be%20continue%20update/" rel="next" title="Linux to be continue update">
+                  Linux to be continue update <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">pipi</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"8FiyFZkhWInNXVB0lIUmbtPr-gzGzoHsz","appKey":"LEP7VhClCq3n9vDCc2wv5on6","serverURLs":"https://8fiyfzkh.lc-cn-n1-shared.com","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":true,"enableQQ":true,"requiredFields":[],"el":"#valine-comments","path":"/2023/09/11/%E9%87%8D%E6%9E%84yolov5-6-0-detect-py%E8%BF%9B%E8%A1%8C%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.valine.el)
+    .then(() => NexT.utils.getScript(
+      'https://fastly.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js',
+      { condition: window.Valine }
+    ))
+    .then(() => {
+      new Valine(CONFIG.valine);
+    });
+});
+</script>
+
+</body>
+</html>
